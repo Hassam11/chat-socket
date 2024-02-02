@@ -4,15 +4,13 @@ const chatSocket = (io: Server) => {
   io.on("connection", (socket: Socket) => {
     console.log(`Socket connected: ${socket.id}`);
 
+    // Enviar el ID del socket al cliente
+    socket.emit("serverInfo", { serverSocketId: socket.id });
+
     // Manejar el evento "chatMessage" del cliente
     socket.on("chatMessage", (mensaje: string) => {
-      console.log(`el Id ${socket.id}: mensaje:  ${mensaje}`);
-
-      // Puedes hacer algo con el mensaje aquí, por ejemplo, enviarlo de vuelta al cliente
-      // io.emit("chatMessage", `¡Servidor recibió tu mensaje: ${mensaje}`);
-
-      // También puedes emitir el mensaje a todos los demás clientes excepto el que lo envió
-      // socket.broadcast.emit("chatMessage", mensaje);
+      console.log(`el Id ${socket.id}: mensaje: ${mensaje}`);
+      io.emit("chatMessage", { senderId: socket.id, content: mensaje });
     });
 
     // Manejar la desconexión del cliente
