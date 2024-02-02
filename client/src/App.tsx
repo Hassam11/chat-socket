@@ -2,10 +2,9 @@ import Chat from "./components/chat";
 
 function App() {
   return (
-    <>
-      <h2>ChatSockets</h2>
+    <div className="bg-gray-900 h-screen text-white p-4 font-mono">
       <Chat />
-    </>
+    </div>
   );
 }
 

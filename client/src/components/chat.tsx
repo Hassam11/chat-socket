@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import TerminalViews from "./terminal-view";
 
 const socket: Socket = io("http://localhost:5000");
 
@@ -43,17 +44,7 @@ const Chat: React.FC = () => {
   }, []);
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <h2>Chat desde</h2>
-      {serverSocketId && <p>Conectado al servidor con ID: {serverSocketId}</p>}
-      <input
-        type="text"
-        placeholder="Chatea"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <button type="submit">Enviar</button>
-
+    <div className="flex flex-col h-full justify-between">
       <div>
         <h3>Historial de Chat</h3>
         <ul>
@@ -67,7 +58,28 @@ const Chat: React.FC = () => {
           ))}
         </ul>
       </div>
-    </form>
+      <div>
+        <form onSubmit={handleFormSubmit}>
+          {/* <h2>Chat desde</h2>
+        {serverSocketId && (
+          <p>Conectado al servidor con ID: {serverSocketId}</p>
+        )} */}
+          <div className="flex items-center pb-2">
+            <span className="text-green-400">$</span>
+            <input
+              type="text"
+              className="flex-1 bg-transparent border-none focus:outline-none text-gray-400 ml-2"
+              placeholder="Escribe algo"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          </div>
+          {/* <button type="submit">Enviar</button> */}
+        </form>
+
+        <TerminalViews />
+      </div>
+    </div>
   );
 };
 
